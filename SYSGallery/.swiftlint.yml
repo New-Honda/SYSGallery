@@ -1,0 +1,46 @@
+excluded:
+  - build/
+
+opt_in_rules:
+    - force_unwrapping
+    - force_cast
+    - private_outlet
+    - empty_count
+    - missing_docs
+    - closure_spacing
+    - collection_alignment
+    - implicitly_unwrapped_optional
+    - no_extension_access_modifier
+    - operator_usage_whitespace
+
+line_length: 120
+
+vertical_whitespace:
+    max_empty_lines: 2
+large_tuple:
+    warning: 3
+    error: 4
+line_length:
+    warning: 250
+    error: 500
+function_parameter_count:
+    warning: 10
+    error: 11
+
+custom_rules:
+    missing_docs:
+        included: ".*.swift"
+        regex: '\n *(?!\/\/\/)(\/\/)?[^\n\/]*\n *(?:@\S+ )*(?:public |open )'
+        name: "Missing Docs"
+        message: "Types, properties and methods with public or open access level should be documented."
+        severity: warning
+
+custom_rules:
+  no_direct_init:
+    name: "No Direct Init"
+    regex: '\.(?!super)\binit\b\((?!(\s*|\())'
+    match_kinds: [identifier]
+    message: "Direct use of .init() detected, use type inference instead."
+    severity: warning
+
+reporter: "xcode"
