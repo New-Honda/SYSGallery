@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1122965F2D5D2F740039A640 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1122965D2D5D2F740039A640 /* NetworkManager.swift */; };
+		112296602D5D2F740039A640 /* NetworkManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1122965E2D5D2F740039A640 /* NetworkManagerProtocol.swift */; };
+		112296632D5D35210039A640 /* NetworkManagerMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112296622D5D35210039A640 /* NetworkManagerMethods.swift */; };
+		112296652D5D3EF30039A640 /* NetworkManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112296642D5D3EF30039A640 /* NetworkManagerError.swift */; };
 		11787E552D5D0C6C00E8E3E1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 11787E542D5D0C6C00E8E3E1 /* Alamofire */; };
 		11787E572D5D0C6C00E8E3E1 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 11787E562D5D0C6C00E8E3E1 /* AlamofireDynamic */; };
 		11A05F592D5D04CB008AEAF5 /* SYSGalleryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A05F582D5D04CB008AEAF5 /* SYSGalleryApp.swift */; };
@@ -16,6 +20,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1122965D2D5D2F740039A640 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		1122965E2D5D2F740039A640 /* NetworkManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerProtocol.swift; sourceTree = "<group>"; };
+		112296622D5D35210039A640 /* NetworkManagerMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerMethods.swift; sourceTree = "<group>"; };
+		112296642D5D3EF30039A640 /* NetworkManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerError.swift; sourceTree = "<group>"; };
 		11A05F552D5D04CB008AEAF5 /* SYSGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SYSGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11A05F582D5D04CB008AEAF5 /* SYSGalleryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYSGalleryApp.swift; sourceTree = "<group>"; };
 		11A05F5A2D5D04CB008AEAF5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -36,6 +44,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		112296612D5D2F880039A640 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				112296642D5D3EF30039A640 /* NetworkManagerError.swift */,
+				1122965D2D5D2F740039A640 /* NetworkManager.swift */,
+				1122965E2D5D2F740039A640 /* NetworkManagerProtocol.swift */,
+				112296622D5D35210039A640 /* NetworkManagerMethods.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		11A05F4C2D5D04CB008AEAF5 = {
 			isa = PBXGroup;
 			children = (
@@ -55,6 +74,7 @@
 		11A05F572D5D04CB008AEAF5 /* SYSGallery */ = {
 			isa = PBXGroup;
 			children = (
+				112296612D5D2F880039A640 /* Networking */,
 				11A05F582D5D04CB008AEAF5 /* SYSGalleryApp.swift */,
 				11A05F5A2D5D04CB008AEAF5 /* ContentView.swift */,
 				11A05F5C2D5D04D1008AEAF5 /* Assets.xcassets */,
@@ -170,6 +190,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				112296632D5D35210039A640 /* NetworkManagerMethods.swift in Sources */,
+				112296652D5D3EF30039A640 /* NetworkManagerError.swift in Sources */,
+				1122965F2D5D2F740039A640 /* NetworkManager.swift in Sources */,
+				112296602D5D2F740039A640 /* NetworkManagerProtocol.swift in Sources */,
 				11A05F5B2D5D04CB008AEAF5 /* ContentView.swift in Sources */,
 				11A05F592D5D04CB008AEAF5 /* SYSGalleryApp.swift in Sources */,
 			);
