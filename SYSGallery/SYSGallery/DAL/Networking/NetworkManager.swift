@@ -15,36 +15,47 @@ final class NetworkManager: NetworkManagerProtocol {
 
     func loadData<T: Decodable>(path: String,
                                 method: NetworkManagerMethods = .GET,
-                                parameters: [String: Any]) -> AnyPublisher<T, NetworkManagerError> {
+                                parameters: [String: Any]) -> AnyPublisher<NetworkManagerResponse<T>, NetworkManagerError> {
         let stringURL: String = baseUrl + path
 
         guard let urlComponents = URLComponents(string: stringURL) else {
             return Fail(error: .badUrl).eraseToAnyPublisher()
         }
 
-        let headers = HTTPHeaders(defaultHeaders.map { HTTPHeader(name: $0, value: $1) })
+        let headers = HTTPHeaders(defaultHeaders)
         let request = AF.request(urlComponents, method: .init(rawValue: method.rawValue), parameters: parameters, headers: headers).validate(statusCode: 200...299)
 
-        return request.publishDecodable(type: T.self).value()
-            .receive(on: DispatchQueue.main)
-            .mapError({ afError in
+        return request.publishDecodable(type: T.self).tryMap {
+            // Error checking and handling
+            if let afError = $0.error {
                 if let failureCode = afError.responseCode {
-                    return NetworkManagerError.httpError(code: failureCode)
+                    throw NetworkManagerError.httpError(code: failureCode)
                 } else if let connectionError = afError.underlyingError as? URLError {
                     switch connectionError.code {
                     case .notConnectedToInternet:
-                        return .noInternet
+                        throw NetworkManagerError.noInternet
                     case .timedOut, .networkConnectionLost, .cannotConnectToHost:
-                        return .connectionFailed
+                        throw NetworkManagerError.connectionFailed
                     default:
-                        return .unknown(error: afError.errorDescription)
+                        throw NetworkManagerError.unknown(error: afError.errorDescription)
                     }
                 } else if case .responseSerializationFailed = afError {
-                    return .badParsing
+                    throw NetworkManagerError.badParsing
                 } else {
-                    return .unknown(error: afError.errorDescription)
+                    throw NetworkManagerError.unknown(error: afError.errorDescription)
                 }
-            })
-            .eraseToAnyPublisher()
+            }
+
+            // Model unwraping
+            guard let model = $0.value else {
+                throw NetworkManagerError.unknown(error: nil)
+            }
+
+            // Response model
+            let networkManagerResponse = NetworkManagerResponse.init(headers: $0.response?.headers.dictionary ?? [:], model: model)
+
+            return networkManagerResponse
+        }.mapError { $0 as? NetworkManagerError ?? .unknown(error: nil) }
+        .eraseToAnyPublisher()
     }
 }

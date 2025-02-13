@@ -12,6 +12,10 @@
 		112296632D5D35210039A640 /* NetworkManagerMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112296622D5D35210039A640 /* NetworkManagerMethods.swift */; };
 		112296652D5D3EF30039A640 /* NetworkManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112296642D5D3EF30039A640 /* NetworkManagerError.swift */; };
 		112296682D5E5EBE0039A640 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 112296672D5E5EBE0039A640 /* Alamofire */; };
+		1122966B2D5E65AE0039A640 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1122966A2D5E65AE0039A640 /* DataProvider.swift */; };
+		1122966F2D5E8C160039A640 /* ProviderPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1122966E2D5E8C160039A640 /* ProviderPath.swift */; };
+		112296752D5E8E870039A640 /* Publisher+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112296742D5E8E870039A640 /* Publisher+Async.swift */; };
+		1122967A2D5E96730039A640 /* NetworkManagerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112296792D5E96730039A640 /* NetworkManagerResponse.swift */; };
 		11A05F592D5D04CB008AEAF5 /* SYSGalleryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A05F582D5D04CB008AEAF5 /* SYSGalleryApp.swift */; };
 		11A05F5B2D5D04CB008AEAF5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A05F5A2D5D04CB008AEAF5 /* ContentView.swift */; };
 		11A05F5D2D5D04D1008AEAF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11A05F5C2D5D04D1008AEAF5 /* Assets.xcassets */; };
@@ -23,6 +27,10 @@
 		1122965E2D5D2F740039A640 /* NetworkManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerProtocol.swift; sourceTree = "<group>"; };
 		112296622D5D35210039A640 /* NetworkManagerMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerMethods.swift; sourceTree = "<group>"; };
 		112296642D5D3EF30039A640 /* NetworkManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerError.swift; sourceTree = "<group>"; };
+		1122966A2D5E65AE0039A640 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
+		1122966E2D5E8C160039A640 /* ProviderPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderPath.swift; sourceTree = "<group>"; };
+		112296742D5E8E870039A640 /* Publisher+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Async.swift"; sourceTree = "<group>"; };
+		112296792D5E96730039A640 /* NetworkManagerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerResponse.swift; sourceTree = "<group>"; };
 		11A05F552D5D04CB008AEAF5 /* SYSGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SYSGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11A05F582D5D04CB008AEAF5 /* SYSGalleryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYSGalleryApp.swift; sourceTree = "<group>"; };
 		11A05F5A2D5D04CB008AEAF5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -49,8 +57,35 @@
 				1122965D2D5D2F740039A640 /* NetworkManager.swift */,
 				1122965E2D5D2F740039A640 /* NetworkManagerProtocol.swift */,
 				112296622D5D35210039A640 /* NetworkManagerMethods.swift */,
+				112296792D5E96730039A640 /* NetworkManagerResponse.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		112296692D5E64A70039A640 /* DataProviders */ = {
+			isa = PBXGroup;
+			children = (
+				1122966A2D5E65AE0039A640 /* DataProvider.swift */,
+				1122966E2D5E8C160039A640 /* ProviderPath.swift */,
+			);
+			path = DataProviders;
+			sourceTree = "<group>";
+		};
+		112296762D5E8EFF0039A640 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				112296742D5E8E870039A640 /* Publisher+Async.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		112296772D5E94DA0039A640 /* DAL */ = {
+			isa = PBXGroup;
+			children = (
+				112296612D5D2F880039A640 /* Networking */,
+				112296692D5E64A70039A640 /* DataProviders */,
+			);
+			path = DAL;
 			sourceTree = "<group>";
 		};
 		11A05F4C2D5D04CB008AEAF5 = {
@@ -72,7 +107,8 @@
 		11A05F572D5D04CB008AEAF5 /* SYSGallery */ = {
 			isa = PBXGroup;
 			children = (
-				112296612D5D2F880039A640 /* Networking */,
+				112296772D5E94DA0039A640 /* DAL */,
+				112296762D5E8EFF0039A640 /* Extensions */,
 				11A05F582D5D04CB008AEAF5 /* SYSGalleryApp.swift */,
 				11A05F5A2D5D04CB008AEAF5 /* ContentView.swift */,
 				11A05F5C2D5D04D1008AEAF5 /* Assets.xcassets */,
@@ -191,8 +227,12 @@
 				112296632D5D35210039A640 /* NetworkManagerMethods.swift in Sources */,
 				112296652D5D3EF30039A640 /* NetworkManagerError.swift in Sources */,
 				1122965F2D5D2F740039A640 /* NetworkManager.swift in Sources */,
+				1122966B2D5E65AE0039A640 /* DataProvider.swift in Sources */,
 				112296602D5D2F740039A640 /* NetworkManagerProtocol.swift in Sources */,
+				1122967A2D5E96730039A640 /* NetworkManagerResponse.swift in Sources */,
+				1122966F2D5E8C160039A640 /* ProviderPath.swift in Sources */,
 				11A05F5B2D5D04CB008AEAF5 /* ContentView.swift in Sources */,
+				112296752D5E8E870039A640 /* Publisher+Async.swift in Sources */,
 				11A05F592D5D04CB008AEAF5 /* SYSGalleryApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,5 +12,5 @@ import Foundation
 protocol NetworkManagerProtocol {
     func loadData<T: Decodable>(path: String,
                                 method: NetworkManagerMethods,
-                                parameters: [String: Any]) -> AnyPublisher<T, NetworkManagerError>
+                                parameters: [String: Any]) -> AnyPublisher<NetworkManagerResponse<T>, NetworkManagerError>
 }
