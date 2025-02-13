@@ -11,5 +11,6 @@ enum NetworkManagerError: Error {
     case connectionFailed
     case noInternet
     case badUrl
+    case badParsing
     case unknown(error: String?)
 }

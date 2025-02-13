@@ -18,7 +18,7 @@ final class NetworkManager: NetworkManagerProtocol {
                                 parameters: [String: Any]) -> AnyPublisher<T, NetworkManagerError> {
         let stringURL: String = baseUrl + path
 
-        guard var urlComponents = URLComponents(string: stringURL) else {
+        guard let urlComponents = URLComponents(string: stringURL) else {
             return Fail(error: .badUrl).eraseToAnyPublisher()
         }
 
@@ -39,6 +39,8 @@ final class NetworkManager: NetworkManagerProtocol {
                     default:
                         return .unknown(error: afError.errorDescription)
                     }
+                } else if case .responseSerializationFailed = afError {
+                    return .badParsing
                 } else {
                     return .unknown(error: afError.errorDescription)
                 }
@@ -46,4 +48,3 @@ final class NetworkManager: NetworkManagerProtocol {
             .eraseToAnyPublisher()
     }
 }
-    
