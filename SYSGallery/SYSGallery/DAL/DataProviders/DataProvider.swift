@@ -22,7 +22,13 @@ class DataProvider {
         let publisher: AnyPublisher<NetworkManagerResponse<Model>, NetworkManagerError> = networkManager.loadData(path: path.rawValue,
                                                                                                                   method: method,
                                                                                                                   parameters: parameters)
-        let model: Model = try await publisher.async().model
+        let response: NetworkManagerResponse<Model> = try await publisher.async()
+        let model: Model = handle(response: response)
+
         return model
+    }
+
+    func handle<Model: Codable>(response: NetworkManagerResponse<Model>) -> Model {
+        response.model
     }
 }
