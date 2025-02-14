@@ -7,7 +7,11 @@
 
 import Combine
 
-class DataProvider {
+protocol DataProvidable {
+    func getData<Model: Codable>(from path: ProviderPath, method: NetworkManagerMethods, parameters: [String: Any]) async throws -> Model
+}
+
+class DataProvider: DataProvidable {
     private let networkManager: NetworkManagerProtocol
 
     // MARK: - Init
