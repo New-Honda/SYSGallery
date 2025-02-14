@@ -7,4 +7,5 @@
 
 enum ProviderPath: String {
     case photos = "/photos"
+    case user = "/users/darkcatimages/photos"
 }
