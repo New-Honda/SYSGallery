@@ -17,10 +17,13 @@ struct PhotoRowView: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
-            AsyncImage(url: URL(string: image))
-                .scaledToFill()
-                .frame(width: imageWidth, height: imageWidth)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+            AsyncCachedImage(url: URL(string: image), content: { image in
+                image
+            }, placeholder: {
+                ProgressView()
+            })
+            .frame(width: imageWidth, height: imageWidth)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
 
             VStack(alignment: .leading, spacing: 8) {
                 Text(author)
