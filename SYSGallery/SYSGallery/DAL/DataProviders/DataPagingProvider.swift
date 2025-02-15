@@ -55,6 +55,8 @@ class DataPagingProvider: DataProvider {
     }
 
     func setNextPage() {
+        guard !isLoading else { return }
+
         page += 1
     }
 
