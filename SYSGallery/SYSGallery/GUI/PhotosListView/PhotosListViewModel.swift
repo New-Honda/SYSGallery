@@ -17,18 +17,29 @@ final class PhotosListViewModel: BaseViewModel {
         dataProvider.canLoadMore
     }
 
-    func getPhotos() {
-        Task {
-            guard let photoModels: [PhotoModel] = await apply(dataProvider: dataProvider, path: .user, method: .GET) else { return }
+    private func getModel<Model: Codable>() async -> Model? {
+        await apply(dataProvider: dataProvider, path: .user, method: .GET)
+    }
 
-            await MainActor.run {
-                self.photos.append(contentsOf: photoModels)
-            }
+    func getPhotos() async {
+        guard let photoModels: [PhotoModel] = await getModel() else { return }
+
+        await MainActor.run {
+            photos.append(contentsOf: photoModels)
         }
     }
 
-    func getNextPhotoPage() {
+    func getNextPhotoPage() async {
         dataProvider.setNextPage()
-        getPhotos()
+        await getPhotos()
+    }
+
+    func reload() async {
+        dataProvider.reset()
+        guard let photoModels: [PhotoModel] = await getModel() else { return }
+
+        await MainActor.run {
+            photos = photoModels
+        }
     }
 }

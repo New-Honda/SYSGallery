@@ -26,11 +26,13 @@ struct PhotosListView: View {
                         ProgressView("Loading...")
                         Spacer()
                     }.onAppear {
-                        viewModel.getNextPhotoPage()
+                        Task { await viewModel.getNextPhotoPage() }
                     }
                 }
             }.onAppear {
-                viewModel.getPhotos()
+                Task { await viewModel.getPhotos() }
+            }.refreshable {
+                await viewModel.reload()
             }
         }.alert(isPresented: Binding<Bool>(
             get: { self.viewModel.errorTitle != nil },
@@ -39,7 +41,7 @@ struct PhotosListView: View {
             Alert(title: Text(viewModel.errorTitle ?? ""),
                   message: nil,
                   dismissButton: .default(Text("Try again")) {
-                viewModel.getPhotos()
+                Task { await viewModel.getPhotos() }
             })
         }
     }
