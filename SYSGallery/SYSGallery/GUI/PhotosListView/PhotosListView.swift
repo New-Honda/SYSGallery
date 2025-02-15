@@ -11,42 +11,44 @@ struct PhotosListView: View {
     @StateObject var viewModel = PhotosListViewModel()
 
     var body: some View {
-        GeometryReader { proxy in
-            List {
-                ForEach(viewModel.photos) { photoModel in
-                    PhotoRowView(image: photoModel.photos.thumb,
-                                 description: photoModel.description,
-                                 likes: photoModel.likes,
-                                 author: photoModel.user.name,
-                                 imageWidth: proxy.size.width * 0.3)
-                }
-                if viewModel.hasMoreData {
-                    HStack {
-                        Spacer()
-                        ProgressView("Loading...")
-                        Spacer()
-                    }.onAppear {
-                        Task { await viewModel.getNextPhotoPage() }
+        NavigationStack {
+            GeometryReader { proxy in
+                List {
+                    ForEach(viewModel.photos) { photoModel in
+                        NavigationLink(destination: {
+                            PhotoDetailView(photo: photoModel)
+                        }, label: {
+                            PhotoRowView(image: photoModel.photos.thumb,
+                                         description: photoModel.description,
+                                         likes: photoModel.likes,
+                                         author: photoModel.user.name,
+                                         imageWidth: proxy.size.width * 0.3)
+                        })
                     }
+                    if viewModel.hasMoreData {
+                        HStack {
+                            Spacer()
+                            ProgressView("Loading...")
+                            Spacer()
+                        }.onAppear {
+                            Task { await viewModel.getNextPhotoPage() }
+                        }
+                    }
+                }.onAppear {
+                    Task { await viewModel.getPhotos() }
+                }.refreshable {
+                    await viewModel.reload()
                 }
-            }.onAppear {
-                Task { await viewModel.getPhotos() }
-            }.refreshable {
-                await viewModel.reload()
+            }.alert(isPresented: Binding<Bool>(
+                get: { self.viewModel.errorTitle != nil },
+                set: { _ in self.viewModel.errorTitle = nil }
+            )) {
+                Alert(title: Text(viewModel.errorTitle ?? ""),
+                      message: nil,
+                      dismissButton: .default(Text("Try again")) {
+                    Task { await viewModel.getPhotos() }
+                })
             }
-        }.alert(isPresented: Binding<Bool>(
-            get: { self.viewModel.errorTitle != nil },
-            set: { _ in self.viewModel.errorTitle = nil }
-        )) {
-            Alert(title: Text(viewModel.errorTitle ?? ""),
-                  message: nil,
-                  dismissButton: .default(Text("Try again")) {
-                Task { await viewModel.getPhotos() }
-            })
         }
     }
-}
-
-#Preview {
-    PhotosListView()
 }
