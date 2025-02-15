@@ -5,7 +5,7 @@
 //  Created by Oleksandr Sysenko on 14.02.2025.
 //
 
-struct PhotoModel: Codable {
+struct PhotoModel: Codable, Identifiable {
     struct PhotoURLs: Codable {
         let thumb: String
         let full: String

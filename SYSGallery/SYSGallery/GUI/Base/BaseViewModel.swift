@@ -18,7 +18,9 @@ class BaseViewModel: ObservableObject {
             return try await dataProvider.getData(from: path, method: method, parameters: parameters)
         } catch let error {
             if let error = error as? NetworkManagerError {
-                handle(error: error)
+                await MainActor.run {
+                    handle(error: error)
+                }
             }
 
             return nil

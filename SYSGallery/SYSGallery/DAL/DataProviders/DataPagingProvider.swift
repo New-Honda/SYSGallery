@@ -15,6 +15,12 @@ class DataPagingProvider: DataProvider {
     private(set) var perPage: Int
     private(set) var totalCount: Int?
 
+    var canLoadMore: Bool {
+        guard let totalCount else { return false }
+
+        return page * perPage < totalCount
+    }
+
     init(page: Int = 1, perPage: Int = 10, networkManager: NetworkManagerProtocol = NetworkManager()) {
         self.page = page
         self.perPage = perPage
@@ -50,5 +56,10 @@ class DataPagingProvider: DataProvider {
 
     func setNextPage() {
         page += 1
+    }
+
+    func reset() {
+        page = 1
+        totalCount = nil
     }
 }
