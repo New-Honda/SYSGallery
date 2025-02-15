@@ -32,6 +32,15 @@ struct PhotosListView: View {
             }.onAppear {
                 viewModel.getPhotos()
             }
+        }.alert(isPresented: Binding<Bool>(
+            get: { self.viewModel.errorTitle != nil },
+            set: { _ in self.viewModel.errorTitle = nil }
+        )) {
+            Alert(title: Text(viewModel.errorTitle ?? ""),
+                  message: nil,
+                  dismissButton: .default(Text("Try again")) {
+                viewModel.getPhotos()
+            })
         }
     }
 }
