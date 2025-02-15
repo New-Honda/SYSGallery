@@ -33,14 +33,13 @@ class DataPagingProvider: DataProvider {
                                           parameters: [String: Any]) async throws -> Model {
         guard !isLoading else { throw DataPagingProviderError.requestInProcess }
         isLoading = true
+        defer { isLoading = false }
 
         var parameters = parameters
         parameters["page"] = page
         parameters["per_page"] = perPage
 
         let model: Model = try await super.getData(from: path, method: method, parameters: parameters)
-
-        isLoading = false
 
         return model
     }
