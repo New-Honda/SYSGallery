@@ -12,32 +12,36 @@ struct PhotosListView: View {
 
     var body: some View {
         NavigationStack {
-            GeometryReader { proxy in
-                List {
-                    ForEach(viewModel.photos) { photoModel in
-                        NavigationLink(destination: {
-                            PhotoDetailView(photo: photoModel)
-                        }, label: {
-                            PhotoRowView(image: photoModel.photos.thumb,
-                                         description: photoModel.description,
-                                         likes: photoModel.likes,
-                                         author: photoModel.user.name,
-                                         imageWidth: proxy.size.width * 0.3)
-                        })
-                    }
-                    if viewModel.hasMoreData {
-                        HStack {
-                            Spacer()
-                            ProgressView("Loading...")
-                            Spacer()
-                        }.onAppear {
-                            Task { await viewModel.getNextPhotoPage() }
+            ZStack {
+                if viewModel.photos.isEmpty,
+                   viewModel.isLoading {
+                    ProgressView()
+                } else {
+                    List {
+                        ForEach(viewModel.photos) { photoModel in
+                            NavigationLink(destination: {
+                                PhotoDetailView(photo: photoModel)
+                            }, label: {
+                                PhotoRowView(image: photoModel.photos.thumb,
+                                             description: photoModel.description,
+                                             likes: photoModel.likes,
+                                             author: photoModel.user.name)
+                            })
                         }
+                        if viewModel.hasMoreData {
+                            HStack {
+                                Spacer()
+                                ProgressView("Loading...")
+                                Spacer()
+                            }.onAppear {
+                                Task { await viewModel.getNextPhotoPage() }
+                            }
+                        }
+                    }.onAppear {
+                        Task { await viewModel.getPhotos() }
+                    }.refreshable {
+                        await viewModel.reload()
                     }
-                }.onAppear {
-                    Task { await viewModel.getPhotos() }
-                }.refreshable {
-                    await viewModel.reload()
                 }
             }.alert(isPresented: Binding<Bool>(
                 get: { self.viewModel.errorTitle != nil },
@@ -48,7 +52,7 @@ struct PhotosListView: View {
                       dismissButton: .default(Text("Try again")) {
                     Task { await viewModel.getPhotos() }
                 })
-            }
+            }.navigationTitle("Photos").navigationBarTitleDisplayMode(.inline)
         }
     }
 }

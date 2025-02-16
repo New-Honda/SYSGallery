@@ -45,6 +45,7 @@ struct PhotoDetailView: View {
             }
         }
         .navigationTitle("Post Detail")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

@@ -13,6 +13,10 @@ final class PhotosListViewModel: BaseViewModel {
 
     private let dataProvider = DataPagingProvider()
 
+    var isLoading: Bool {
+        dataProvider.isLoading
+    }
+
     var hasMoreData: Bool {
         dataProvider.canLoadMore
     }

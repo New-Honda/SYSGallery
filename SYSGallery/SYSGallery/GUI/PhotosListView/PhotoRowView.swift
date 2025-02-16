@@ -13,16 +13,15 @@ struct PhotoRowView: View {
     let likes: Int
     let author: String
 
-    let imageWidth: CGFloat
-
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
             AsyncCachedImage(url: URL(string: image), content: { image in
-                image
+                image.resizable()
             }, placeholder: {
                 ProgressView()
             })
-            .frame(width: imageWidth, height: imageWidth)
+            .frame(width: 150, height: 150)
+            .scaledToFit()
             .clipShape(RoundedRectangle(cornerRadius: 12))
 
             VStack(alignment: .leading, spacing: 8) {
@@ -54,6 +53,5 @@ struct PhotoRowView: View {
     PhotoRowView(image: "example_image",
                  description: "This is an example description for a post.",
                  likes: 120,
-                 author: "John Doe",
-                 imageWidth: 100)
+                 author: "John Doe")
 }
