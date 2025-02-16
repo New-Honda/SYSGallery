@@ -18,7 +18,7 @@ final class PhotosListViewModel: BaseViewModel {
     }
 
     private func getModel<Model: Codable>() async -> Model? {
-        await apply(dataProvider: dataProvider, path: .user, method: .GET)
+        await apply(dataProvider: dataProvider, path: .photos, method: .GET)
     }
 
     func getPhotos() async {

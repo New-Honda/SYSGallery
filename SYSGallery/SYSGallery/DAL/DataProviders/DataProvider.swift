@@ -22,8 +22,8 @@ class DataProvider: DataProvidable {
 
     // MARK: - Public
 
-    func getData<Model: Codable>(from path: ProviderPath, method: NetworkManagerMethods, parameters: [String: Any]) async throws -> Model {
-        let publisher: AnyPublisher<NetworkManagerResponse<Model>, NetworkManagerError> = networkManager.loadData(path: path.rawValue,
+    func getData<Model: Codable>(from provider: ProviderPath, method: NetworkManagerMethods, parameters: [String: Any]) async throws -> Model {
+        let publisher: AnyPublisher<NetworkManagerResponse<Model>, NetworkManagerError> = networkManager.loadData(path: provider.path,
                                                                                                                   method: method,
                                                                                                                   parameters: parameters)
         let response: NetworkManagerResponse<Model> = try await publisher.async()
