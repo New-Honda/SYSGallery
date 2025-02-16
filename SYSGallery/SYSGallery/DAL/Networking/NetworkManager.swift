@@ -10,8 +10,14 @@ import Foundation
 import Combine
 
 final class NetworkManager: NetworkManagerProtocol {
-    private let defaultHeaders: [String: String] = ["Authorization": "Client-ID RGBf5eVcVR1c5r8FZYBZykeQPpSdPeoaEXELNv2wsfo"]
-    private let baseUrl = "https://api.unsplash.com"
+    let defaultHeaders: [String: String] = ["Authorization": "Client-ID RGBf5eVcVR1c5r8FZYBZykeQPpSdPeoaEXELNv2wsfo"]
+    let baseUrl = "https://api.unsplash.com"
+
+    private let session: Session
+
+    init(session: Session = AF) {
+        self.session = session
+    }
 
     func loadData<T: Decodable>(path: String,
                                 method: NetworkManagerMethods = .GET,
@@ -23,7 +29,7 @@ final class NetworkManager: NetworkManagerProtocol {
         }
 
         let headers = HTTPHeaders(defaultHeaders)
-        let request = AF.request(urlComponents, method: .init(rawValue: method.rawValue), parameters: parameters, headers: headers).validate(statusCode: 200...299)
+        let request = session.request(urlComponents, method: .init(rawValue: method.rawValue), parameters: parameters, headers: headers).validate(statusCode: 200...299)
 
         return request.publishDecodable(type: T.self).tryMap {
             // Error checking and handling
