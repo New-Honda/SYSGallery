@@ -37,8 +37,8 @@ struct PhotosListView: View {
                                 Task { await viewModel.getNextPhotoPage() }
                             }
                         }
-                    }.onAppear {
-                        Task { await viewModel.getPhotos() }
+                    }.task {
+                        await viewModel.getPhotos()
                     }.refreshable {
                         await viewModel.reload()
                     }
